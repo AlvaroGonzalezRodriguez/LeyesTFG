@@ -1,0 +1,27 @@
+﻿@model LeyesTFG.Models.Articulo
+
+@{
+    ViewData["Title"] = "Borrar";
+}
+
+<h1>Borrar</h1>
+
+<h3>¿Estás seguro que quieres eliminar este artículo de la base de datos?<br>Todas las modificaciones asociadas serán eliminadas</h3>
+<div>
+    <h4>Articulo</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Texto)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.Raw(Model.Texto)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ArticuloId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Volver a la lista</a>
+    </form>
+</div>

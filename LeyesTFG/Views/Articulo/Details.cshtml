@@ -1,0 +1,42 @@
+﻿@model LeyesTFG.Models.Articulo
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<h1>Detalles</h1>
+
+<div>
+    <h4>Articulo</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ArticuloId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ArticuloId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Texto)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.Raw(Model.Texto)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Modificaciones)
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var modificacion in Model.Modificaciones)
+            {
+                <p>
+                @Html.DisplayFor(modelItem => modificacion.Titulo) |
+                <a asp-area="" asp-controller="Modificacion" asp-action="Details" asp-route-id="@modificacion.ModificacionId">Detalles</a><br>
+                </p>
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ArticuloId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

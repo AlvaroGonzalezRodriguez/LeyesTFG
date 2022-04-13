@@ -1,0 +1,54 @@
+﻿@model IEnumerable<LeyesTFG.Models.Ley>
+
+@{
+    ViewData["Title"] = "Ley";
+}
+
+<h1>Leyes</h1>
+
+<p>
+    <a asp-action="Create">Nueva ley</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LeyId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaPublicacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Departamento)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) 
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeyId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaPublicacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departamento)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.LeyId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.LeyId">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.LeyId">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
