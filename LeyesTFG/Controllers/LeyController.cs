@@ -21,11 +21,18 @@ namespace LeyesTFG.Controllers
         }
 
         // GET: Ley
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string busqueda)
         {
+            ViewData["Filtro"] = busqueda;
             var ley = _context.Ley
                 .Include(c => c.Articulos)
                 .AsNoTracking();
+
+            if (!String.IsNullOrEmpty(busqueda))
+            {
+                ley = ley.Where(c => c.Titulo.Contains(busqueda));
+            }
+
             return View(await ley.ToListAsync());
         }
 

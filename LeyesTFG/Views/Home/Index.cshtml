@@ -2,17 +2,44 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Bienvenido</h1>
-    <p>A continuación puede añadir o pedir cambios a la base de datos de los artículos de la ley</p>
+<div class="row text-center titleTFG">
+    <div class="col-sm-6">
+        <h1 class="display-4">Digitalización de Leyes</h1>
+        <p class="subTitulo">Transformación Digital en la elaboración de Leyes usando editores WYSIWYG.</p>
+    </div>
 </div>
-<div class="row">
-    <div class="col-md-10">
+<div class="row ">
+    <div class="col-md-12 text-center back_white">
+        <h1>Funcionalidad</h1>
+        <p>
+            Esta página web permite al usuario añadir una o varias leyes con sus respectivos articulos. El principal objetivo es la digitalización de la misma
+            ley y mantener un control de las modificaciones de sus artículos.<br />
+            Su uso es muy simple. Si se quiere añadir un <strong>artículo</strong> primero se debe de añadir su respectiva <strong>ley</strong> 
+            en la <a asp-area="" asp-controller="Ley" asp-action="Index">base datos de leyes</a>.
+            Una vez se ha añadido la ley ya se le pueden asignar <a asp-area="" asp-controller="Articulo" asp-action="Index">artículos</a>. Lo mismo se 
+            aplica para las <strong>modificaciones</strong>. Para que una modificación exista primero debe de añadirse el artículo original. Las modificaciones
+            también tienen su propia <a asp-area="" asp-controller="Modificacion" asp-action="Index">base de datos</a>.
+            Esta aplicación no está limitada a una sola ley y por lo tanto se puede añadir más de una si así se desea.
+        </p>
+    </div>
+    
+</div>
+<div class="row justify-content-center">
+    <a class="col-md-3 boton margin-top" asp-area="" asp-controller="Ley" asp-action="Index">
+        <img class="image" src="../images/ley.png" height="100" width="100" alt="Imagen vectorial de una ley"/>
+        <p class="subtitulo">Añadir ley</p>
+    </a>
+    <a class="col-md-3 boton margin-top" asp-area="" asp-controller="Articulo" asp-action="Index">
+        <img class="image" src="../images/ley.png" height="100" width="100" alt="Imagen vectorial de una ley"/>
         <p>Añadir artículo</p>
-        <p></p>
-    </div>
-    <div class="col-md-10">
-        <p>Propuestas de modificaciones</p>
-        <p></p>
-    </div>
+        
+    </a>
+    <a class="col-md-3 boton margin-top" asp-area="" asp-controller="Modificacion" asp-action="Index">
+        <img class="image" src="../images/ley.png" height="100" width="100" alt="Imagen vectorial de una ley"/>
+        <p>Añadir modificaciones</p>
+    </a>
+    <a class="col-md-2 boton margin-top" asp-area="" asp-controller="Home" asp-action="Privacy">
+        <img class="image" src="../images/pregunta.png" height="100" width="70" alt="Imagen vectorial de una ley"/>
+        <p>Información</p>
+    </a>
 </div>

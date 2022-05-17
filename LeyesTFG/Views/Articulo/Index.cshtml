@@ -9,6 +9,17 @@
 <p>
     <a asp-action="Create">Nuevo artículo</a>
 </p>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p> 
+            Buscar por ley: <input type="text" name="Busqueda" value="@ViewData["Filtro"]" />
+            <input type="submit" value="Busqueda" class="btn btn-default" /> |
+            <a asp-action="Index">Lista completa</a>
+        </p>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -37,7 +48,7 @@
                 @Html.Raw(item.Texto)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ArticuloId">Editar</a> |
+                <a asp-controller="Modificacion" asp-action="Create" asp-route-id="@item.Modificaciones">Modificar</a> |
                 <a asp-action="Details" asp-route-id="@item.ArticuloId">Detalles</a> |
                 <a asp-action="Delete" asp-route-id="@item.ArticuloId">Borrar</a>
             </td>

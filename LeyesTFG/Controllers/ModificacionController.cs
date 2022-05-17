@@ -55,6 +55,7 @@ namespace LeyesTFG.Controllers
             return View();
         }
 
+
         // POST: Modificacion/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -133,6 +134,8 @@ namespace LeyesTFG.Controllers
                                 select a;
             ViewBag.ArticuloId = new SelectList(articuloQuery.AsNoTracking(), "ArticuloId", "Titulo", ArticuloSeleccionado);
         }
+
+        
 
         // GET: Modificacion/Delete/5
         public async Task<IActionResult> Delete(int? id)
