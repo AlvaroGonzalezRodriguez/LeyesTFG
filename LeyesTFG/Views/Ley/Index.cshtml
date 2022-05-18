@@ -4,23 +4,23 @@
     ViewData["Title"] = "Ley";
 }
 
-<h1>Leyes</h1>
+<h1 class="tituloTabla text-center">Leyes</h1>
 
 <p>
-    <a asp-action="Create">Nueva ley</a>
+    <a class="boton_tabla" asp-action="Create">Nueva ley</a>
 </p>
 
 <form asp-action="Index" method="get">
-    <div class="form-actions no-color">
-        <p> 
+    <div class="col-sm-6 form-actions padding-left bg-white border_2px">
+        <p class="margin-top"> 
             Buscar por título: <input type="text" name="Busqueda" value="@ViewData["Filtro"]" />
-            <input type="submit" value="Busqueda" class="btn btn-default" /> |
-            <a asp-action="Index">Lista completa</a>
+            <input type="submit" value="Busqueda" class="boton_tabla back_blue" /> |
+            <a class="boton_tabla" asp-action="Index">Lista completa</a>
         </p>
     </div>
 </form>
 
-<table class="table">
+<table bgcolor="#FFFFFF" class="table table-striped margin-top">
     <thead>
         <tr>
             <th>
@@ -54,10 +54,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Departamento)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.LeyId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.LeyId">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.LeyId">Borrar</a>
+            <td class="text-center">
+                <div class="container">
+                    <a class="boton_tabla padding_boton_sm" asp-action="Edit" asp-route-id="@item.LeyId">Editar</a>
+                </div>
+                <div class="container margin-top">
+                    <a class="boton_tabla back_blue padding_boton_sm" asp-action="Details" asp-route-id="@item.LeyId">Detalles</a>
+                </div>
+                <div class="container margin-top">
+                    <a class="boton_tabla padding_boton_sm bg-danger" asp-action="Delete" asp-route-id="@item.LeyId">Borrar</a>
+                </div>
             </td>
         </tr>
 }

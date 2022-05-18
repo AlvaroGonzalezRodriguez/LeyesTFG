@@ -4,23 +4,23 @@
     ViewData["Title"] = "Artículo";
 }
 
-<h1>Artículos</h1>
+<h1 class="tituloTabla text-center">Artículos</h1>
 
 <p>
-    <a asp-action="Create">Nuevo artículo</a>
+    <a class="boton_tabla" asp-action="Create">Nuevo artículo</a>
 </p>
 
 <form asp-action="Index" method="get">
-    <div class="form-actions no-color">
-        <p> 
+    <div class="col-sm-6 form-actions padding-left bg-white border_2px">
+        <p class="margin-top"> 
             Buscar por ley: <input type="text" name="Busqueda" value="@ViewData["Filtro"]" />
-            <input type="submit" value="Busqueda" class="btn btn-default" /> |
-            <a asp-action="Index">Lista completa</a>
+            <input type="submit" value="Busqueda" class="boton_tabla back_blue" /> |
+            <a class="boton_tabla" asp-action="Index">Lista completa</a>
         </p>
     </div>
 </form>
 
-<table class="table">
+<table bgcolor="#FFFFFF" class="table table-striped margin-top">
     <thead>
         <tr>
             <th>
@@ -47,10 +47,16 @@
             <td>
                 @Html.Raw(item.Texto)
             </td>
-            <td>
-                <a asp-controller="Modificacion" asp-action="Create" asp-route-id="@item.Modificaciones">Modificar</a> |
-                <a asp-action="Details" asp-route-id="@item.ArticuloId">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.ArticuloId">Borrar</a>
+            <td class="text-center">
+                <div class="container">
+                    <a class="boton_tabla padding_boton_sm" asp-controller="Modificacion" asp-action="Create" asp-route-id="@item.Modificaciones">Modificar</a>
+                </div>
+                <div class="container margin-top">
+                    <a class="boton_tabla back_blue padding_boton_sm" asp-action="Details" asp-route-id="@item.ArticuloId">Detalles</a>
+                </div>
+                <div class="container margin-top">
+                    <a class="boton_tabla padding_boton_sm bg-danger" asp-action="Delete" asp-route-id="@item.ArticuloId">Borrar</a>
+                </div>
             </td>
         </tr>
 }

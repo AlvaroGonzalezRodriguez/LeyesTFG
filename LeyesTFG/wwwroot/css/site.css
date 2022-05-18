@@ -38,6 +38,11 @@ body {
     border-radius: 25px;*/
 }
 
+.tituloTabla {
+    font-size: 50px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
 .subTitulo {
     font-size: 21px;
     font-weight: 300;
@@ -47,7 +52,7 @@ body {
 
 .back_white {
     background-color: white;
-    border: 3px solid #000000;
+    border: 2px solid #000000;
     border-radius: 10px;
     margin-top: 10px;
 }
@@ -64,8 +69,42 @@ body {
     border: 3px solid #000000;*/
 }
 
+.boton_tabla {
+    margin: 5px 5px 0px 2px;
+    background-color: darkgoldenrod;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}
+
+.padding_boton_sm {
+    padding: 5px 5px;
+    z-index: auto;
+}
+
+.line_height {
+    line-height: 20px;
+}
+
 .margin-top {
-    margin-top: 30px;
+    margin-top: 20px;
+}
+
+.padding-top {
+    padding-top: 20px;
+}
+
+.padding-left {
+    padding-left: 10px;
+}
+
+.border_2px {
+    border: 2px solid #000000;
+}
+
+.back_blue {
+    background-color: darkcyan;
 }
 
 .back_ora {

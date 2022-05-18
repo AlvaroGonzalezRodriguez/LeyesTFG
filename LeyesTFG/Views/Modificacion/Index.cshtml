@@ -4,12 +4,12 @@
     ViewData["Title"] = "Modificación";
 }
 
-<h1>Modificaciones</h1>
+<h1 class="tituloTabla text-center">Modificaciones</h1>
 
 <p>
-    <a asp-action="Create">Nueva modificación</a>
+    <a class="boton_tabla" asp-action="Create">Nueva modificación</a>
 </p>
-<table class="table">
+<table bgcolor="#FFFFFF" class="table table-striped margin-top">
     <thead>
         <tr>
             <th>
@@ -36,10 +36,16 @@
             <td>
                 @Html.Raw(item.Texto)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ModificacionId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.ModificacionId">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.ModificacionId">Eliminar</a>
+            <td class="text-center">
+                <div class="container">
+                    <a class="boton_tabla padding_boton_sm" asp-action="Edit" asp-route-id="@item.ModificacionId">Editar</a>
+                </div>
+                <div class="container margin-top">
+                    <a class="boton_tabla back_blue padding_boton_sm" asp-action="Details" asp-route-id="@item.ModificacionId">Detalles</a>
+                </div>
+                <div class="container margin-top">
+                    <a class="boton_tabla padding_boton_sm bg-danger" asp-action="Delete" asp-route-id="@item.ModificacionId">Eliminar</a>
+                </div>
             </td>
         </tr>
 }
