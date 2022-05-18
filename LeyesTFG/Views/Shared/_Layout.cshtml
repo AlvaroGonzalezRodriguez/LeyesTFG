@@ -54,13 +54,34 @@
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <!-- Inicializar editor WYSIWYG -->
     <script>
-      var quill = new Quill('#editor', {
-        theme: 'snow'
-      });
-      function handleSubmit(){
-          console.info('handleSubmit.called');
-          document.getElementById('jdr').value = quill.root.innerHTML;
-      };
+          var toolbarOptions = [
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          [{ 'font': [] }],
+
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote'],
+          
+          [{ 'align': [] }],
+
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          [{ 'script': 'sub'}, { 'script': 'super' }],
+          [{ 'indent': '-1'}, { 'indent': '+1' }],
+          [{ 'direction': 'rtl' }],
+
+          [{ 'color': [] }, { 'background': [] }],
+
+          ['clean']
+          ];
+          var quill = new Quill('#editor', {
+            modules: {
+              toolbar: toolbarOptions
+            },
+            theme: 'snow'
+          });
+          function handleSubmit(){
+              console.info('handleSubmit.called');
+              document.getElementById('jdr').value = quill.root.innerHTML;
+          };
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

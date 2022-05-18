@@ -78,6 +78,12 @@ body {
     color: white;
 }
 
+.a4_size {
+    max-width: 2480px;
+    width: 100%;
+    overflow: visible;
+}
+
 .padding_boton_sm {
     padding: 5px 5px;
     z-index: auto;
