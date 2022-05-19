@@ -4,24 +4,31 @@
     ViewData["Title"] = "Borrar";
 }
 
-<h1>Borrar</h1>
+<h1 class="tituloTabla text-center">Borrar</h1>
 
-<h3>¿Estás seguro que quieres eliminar este artículo de la base de datos?<br>Todas las modificaciones asociadas serán eliminadas</h3>
+<h3 class="text-center">¿Estás seguro que quieres eliminar este artículo de la base de datos?<br></h3>
+<h3 class="text-center" style="color: red;">Todas las modificaciones asociadas también serán eliminadas</h3>
+<h4 class="text-center">Artículo</h4>
 <div>
-    <h4>Articulo</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Texto)
+            @Html.DisplayNameFor(model => model.Titulo)
         </dt>
         <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Titulo)
+        </dd>
+        <dt class = "col-sm-12">
+            @Html.DisplayNameFor(model => model.Texto)
+        </dt>
+        <dd class = "col-sm-12 bg-white padding-left padding_boton_sm margin-top border border-dark">
             @Html.Raw(Model.Texto)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="ArticuloId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Volver a la lista</a>
+        <input type="submit" value="Delete" class="boton_tabla bg-danger" /> |
+        <a class="boton_tabla back_blue" asp-action="Index">Volver a la lista</a>
     </form>
 </div>

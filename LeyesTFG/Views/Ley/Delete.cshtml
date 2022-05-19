@@ -4,11 +4,12 @@
     ViewData["Title"] = "Borrar";
 }
 
-<h1>Borrar</h1>
+<h1 class="tituloTabla text-center">Borrar</h1>
 
-<h3>¿Estás seguro que quieres eliminar esta ley de la base de datos?<br>Todos sus artículos y modificaciones serán eliminadas</h3>
+<h3 class="text-center">¿Estás seguro que quieres eliminar esta ley de la base de datos?<br></h3>
+<h3 class="text-center" style="color: red;">Todos sus artículos y modificaciones también serán eliminadas</h3>
+<h4 class="text-center">Ley</h4>
 <div>
-    <h4>Ley</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -33,7 +34,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="LeyId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Volver a la lista</a>
+        <input type="submit" value="Delete" class="boton_tabla bg-danger" /> |
+        <a class="boton_tabla back_blue" asp-action="Index">Volver a la lista</a>
     </form>
 </div>

@@ -4,10 +4,10 @@
     ViewData["Title"] = "Detalles";
 }
 
-<h1>Detalles</h1>
+<h1 class="tituloTabla text-center">Detalles</h1>
 
-<div>
-    <h4>Articulo</h4>
+<h4 class="text-center">Artículo</h4>
+<div >
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -16,27 +16,29 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ArticuloId)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-12">
             @Html.DisplayNameFor(model => model.Texto)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-12 bg-white padding-left padding_boton_sm margin-top border border-dark">
             @Html.Raw(Model.Texto)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Modificaciones)
         </dt>
         <dd class="col-sm-10">
-            @foreach (var modificacion in Model.Modificaciones)
-            {
-                <p>
-                @Html.DisplayFor(modelItem => modificacion.Titulo) |
-                <a asp-area="" asp-controller="Modificacion" asp-action="Details" asp-route-id="@modificacion.ModificacionId">Detalles</a><br>
-                </p>
-            }
+            <ul>
+                @foreach (var modificacion in Model.Modificaciones)
+                {
+                    <li>
+                    @Html.DisplayFor(modelItem => modificacion.Titulo) |
+                    <a style="color: darkgoldenrod;" asp-area="" asp-controller="Modificacion" asp-action="Details" asp-route-id="@modificacion.ModificacionId">Detalles</a><br>
+                    </li>
+                }
+            </ul>
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-controller="Modificacion" asp-action="Create" asp-route-id="@Model?.Modificaciones">Modificar</a> |
-    <a asp-action="Index">Volver a la lista</a>
+    <a class="boton_tabla" asp-controller="Modificacion" asp-action="Create" asp-route-id="@Model?.Modificaciones">Modificar</a> |
+    <a class="boton_tabla back_blue" asp-action="Index">Volver a la lista</a>
 </div>

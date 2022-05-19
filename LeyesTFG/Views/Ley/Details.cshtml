@@ -4,10 +4,10 @@
     ViewData["Title"] = "Detalles";
 }
 
-<h1>Detalles</h1>
+<h1 class="tituloTabla text-center">Detalles</h1>
 
+<h4 class="text-center">Ley</h4>
 <div>
-    <h4>Ley</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -32,17 +32,19 @@
             @Html.DisplayNameFor(model => model.Articulos)
         </dt>
         <dd class="col-sm-10">
-            @foreach (var articulo in Model.Articulos)
-            {
-                <p>
-                @Html.DisplayFor(modelItem => articulo.Titulo) |
-                <a asp-area="" asp-controller="Articulo" asp-action="Details" asp-route-id="@articulo.ArticuloId">Detalles</a><br>
-                </p>
-            }
+            <ul>
+                @foreach (var articulo in Model.Articulos)
+                {
+                    <li>
+                    @Html.DisplayFor(modelItem => articulo.Titulo) |
+                    <a style="color: darkgoldenrod;" asp-area="" asp-controller="Articulo" asp-action="Details" asp-route-id="@articulo.ArticuloId">Detalles</a><br>
+                    </li>
+                }
+                </ul>
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.LeyId">Editar</a> |
-    <a asp-action="Index">Volver a la lista</a>
+    <a class="boton_tabla" asp-action="Edit" asp-route-id="@Model?.LeyId">Editar</a> |
+    <a class="boton_tabla back_blue" asp-action="Index">Volver a la lista</a>
 </div>
