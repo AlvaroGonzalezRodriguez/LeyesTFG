@@ -1,6 +1,96 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Información";
 }
-<h1>@ViewData["Title"]</h1>
+<div class="bg-white padding-left padding-top padding_boton_sm">
+    <h1 class="tituloTabla">@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+    <h2>Modelos</h2>
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Ley</h3>
+            <p>
+                La tabla de leyes es obligatoria para la existencia de las otras dos tablas, por lo que si se quiere añadir un artículo primero se debe de
+                crear una entrada con la ley correspondiente en la base de datos de leyes. Esta tabla tiene cuatro propiedades y un elemento de navegación:<br />
+            </p>
+            <ul>
+                <li><strong>LeyId</strong>: Es privada, por lo que como usuario no se puede editar y se asigna automaticamente por el sistema.</li>
+                <li><strong>Titulo</strong>: Se trata de una cadena cuyo tamaño mínimo debe de ser tres caracteres. Además es obligatoria.</li>
+                <li><strong>FechaPublicacion</strong>: Fecha en la que la ley entrará o entro en vigor</li>
+                <li><strong>Departamento</strong>: Departamento al que pertenece la ley</li>
+                <li>
+                    <strong>Articulos</strong>: Elemento de navegación que mantiene conectada la tabla de artículos con la de leyes. A una ley se le pueden
+                    asignar uno o más artículos.
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-12">
+            <h3>Artículo</h3>
+            <p>
+                Tabla donde se agregan los artículos de una ley. Antes de añadir un artículo debe de agregarse el nombre de la ley del artículo
+                en la tabla de leyes. Si se quiere cambiar la información de un artículo se deberá de crear una entrada en la tabla de modificaciones
+                para dejar constancia de los cambios.
+            </p>
+            <ul>
+                <li><strong>ArticuloId</strong>: Es privada, por lo que como usuario no se puede editar y se asigna automaticamente por el sistema.</li>
+                <li><strong>Titulo</strong>: Se trata de una cadena cuyo tamaño mínimo debe de ser tres caracteres. Además es obligatoria.</li>
+                <li>
+                    <strong>Texto</strong>: Es el contenido del artículo. Una vez creada la entrada se considerará como el contenido original y no se 
+                    podrá editar.
+                </li>
+                <li>
+                    <strong>LeyId</strong>: Se debe de añadir la clave primaria de la ley para poder relacionarlas. El usuario solo tiene que seleccionar
+                    el título de la ley en una lista de las leyes existentes para que el sistema asigne automaticamente su clave primaria.
+                </li>
+                <li><strong>Ley</strong>: Elemento de navegación. A un artículo solo se le puede añadir una y solo una ley.</li>
+                <li><strong>Modificaciones</strong>: Elemento de navegación. A un artículo se le puede asignar cero o más modificaciones</li>
+            </ul>
+        </div>
+        <div class="col-sm-12">
+            <h3>Modificación</h3>
+            <p>
+                En esta tabla se agregan las modificaciones propuestas a los artículos de una ley. Es por eso que para poder añadir una entrada a esta
+                tabla primero debe de existir, en la base de datos, su artículo correspondiente.
+            </p>
+            <ul>
+                <li><strong>ModificacionId</strong>: Es privada, por lo que como usuario no se puede editar y se asigna automaticamente por el sistema.</li>
+                <li><strong>Titulo</strong>: Se trata de una cadena cuyo tamaño mínimo debe de ser tres caracteres. Además es obligatoria.</li>
+                <li><strong>Texto</strong>: Es el contenido de la modificación. Este contenido se puede editar cuantes veces sea necesario.</li>
+                <li>
+                    <strong>ArticuloId</strong>: Se debe de añadir la clave primaria del artículo para poder relacionarlas. El usuario solo tiene que seleccionar
+                    el título del artículo en una lista con los artículos existentes para que el sistema asigne automaticamente su clave primaria.
+                </li>
+                <li><strong>Articulo</strong>: Elemento de navegación. A una modificación se le puede asignar un y solo un artículo.</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Tecnología usada</h2>
+    <div class="row">
+        <div class="col-sm-12 padding-top">
+            <p>
+                Al tratarse de una aplicación web, se ha optado por hacer uso de ASP.NET Core, un framework de Microsoft que tiene como finalidad desarrollar aplicaciones 
+                web tanto en Windows, Linux o Mac. Para trabajar ha sido necesario usar Visual Studio 2022, ya que en la actualidad no existen más posibilidades de entornos 
+                que permitan trabajar en .NET. Por otro lado, se hace uso de una arquitectura modular por lo que se pueden utilizar paquetes con funcionalidades necesarias para la aplicación.
+                Además, se trabaja en la versión más moderna, .NET 6.<br />
+                Trabajar con este tipo de frameworks trae un gran número de ventajas, destacando entre ellas la capacidad de poder utilizar distintos lenguajes de programación para distintas 
+                finalidades. Por ejemplo, en la aplicación desarrollada, el backend está escrito en C#, mientras que el frontend en HTML. También cabe destacar que en el frontend se tiene la 
+                posibilidad de añadir código en C# gracias al tipo de fichero “cshtml” que está soportado en .NET.<br />
+                Gracias al framework con el que se está trabajando se puede hacer uso de Entity Framework (EF) Core, un mapper que permite trabajar con una base de datos con objetos .NET, 
+                el cual es compatible con varios motores de bases de datos como SQL Server.<br />
+                Respecto a los patrones de diseño, como es necesario estar trabajando con una base de datos a través de una interfaz de usuario, se ha hecho uso del patrón Modelo-Vista-Controlador 
+                (MVC). Con este patrón se puede separar la lógica de negocio con las vistas o interfaces a través de un controlador.<br />
+            </p>
+            <p>En resumen:</p>
+            <ul>
+                <li>Framework: ASP.NET Core con .NET 6, utilizando como back-end C# y front-end HTML</li>
+                <li>Entity Framework (EF) Core como base de datos virtual haciendo uso de SQL Server</li>
+                <li>Uso del patrón Modelo-Vista-Controlador (MVC)</li>
+                <li>El código se encuentra en el siguiente enlace a GitHub: <a href="https://github.com/AlvaroGonzalezRodriguez/LeyesTFG">https://github.com/AlvaroGonzalezRodriguez/LeyesTFG</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Contacto</h2>
+    <p>E-mail de contacto del desarrollador: alu0101202556@ull.edu.es</p>
+</div>
+

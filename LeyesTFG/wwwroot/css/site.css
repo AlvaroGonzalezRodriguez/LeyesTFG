@@ -28,7 +28,8 @@ body {
 }
 
 .titleTFG {
-    background-image: url(https://e00-marca.uecdn.es/assets/multimedia/imagenes/2022/02/23/16456332566243.jpg);
+    /*background-image: url(https://e00-marca.uecdn.es/assets/multimedia/imagenes/2022/02/23/16456332566243.jpg);*/
+    background-image: url(../images/Panoramica_ETSII.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
