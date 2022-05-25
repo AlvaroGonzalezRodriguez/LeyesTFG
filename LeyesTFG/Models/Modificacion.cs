@@ -17,6 +17,8 @@ namespace LeyesTFG.Models
         [Required(ErrorMessage = "Debe de introducir un artículo asociado a la modificación")]
         public int ArticuloId { get; set; }
 
+        public bool Aceptado { get; set; }
+
         public Articulo Articulo { get; set; }
     }
 }

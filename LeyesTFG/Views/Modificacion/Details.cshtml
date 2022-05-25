@@ -28,6 +28,34 @@
         <dd class = "col-sm-12 bg-white padding-left padding_boton_sm margin-top border border-dark">
             @Html.Raw(Model.Articulo.Texto)
         </dd>
+        <dt class = "col-sm-12">
+            Palabras diferentes
+        </dt>
+        <dd class = "col-sm-12 bg-white padding-left padding_boton_sm margin-top border border-dark">
+                <p>Texto agregado</p>
+                <ul>
+                @foreach (var palabra in ViewBag.TextoAgregado)
+                {
+                    <li>
+                        @Html.Raw(palabra)
+                    </li>
+                }
+                </ul>
+                <p>Texto quitado</p>
+                <ul>
+                @foreach (var palabra in ViewBag.TextoQuitado)
+                {
+                    <li>
+                        @Html.Raw(palabra)
+                    </li>
+                }
+                </ul>
+                <p>Texto marcado</p>
+                @foreach(LeyesTFG.Controllers.ModificacionController.CharResult resultado in ViewBag.TextoMarcado)
+                {
+                    <span class=@resultado.state>@resultado.c</span>
+                }
+        </dd>
     </dl>
 </div>
 <div>

@@ -79,6 +79,20 @@ body {
     color: white;
 }
 
+.Equal {
+    background-color: white;
+    font-weight: 17px;
+}
+
+.Add {
+    background-color: greenyellow;
+}
+
+.Remove {
+    background-color: indianred;
+    text-decoration: line-through;
+}
+
 .a4_size {
     max-width: 2480px;
     width: 100%;

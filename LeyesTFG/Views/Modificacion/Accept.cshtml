@@ -1,0 +1,36 @@
+﻿@model LeyesTFG.Models.Modificacion
+
+@{
+    ViewData["Title"] = "Aceptado";
+}
+
+<h1 class="tituloTabla text-center">Aceptar modificacion</h1>
+
+<h3 class="text-center">
+    ¿Estás seguro que quieres aceptar esta propuesta de modificación?<br />Se eliminara su entrada como modificación y se modificará
+    el texto original del artículo
+</h3>
+<h4 class="text-center">Modificación</h4>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-12">
+            @Html.DisplayNameFor(model => model.Texto)
+        </dt>
+        <dd class = "col-sm-12 bg-white padding-left padding_boton_sm margin-top border border-dark">
+            @Html.Raw(Model.Texto)
+        </dd>
+        <dt class = "col-sm-12">
+            <p>Texto original</p>
+        </dt>
+        <dd class = "col-sm-12 bg-white padding-left padding_boton_sm margin-top border border-dark">
+            @Html.Raw(Model.Articulo.Texto)
+        </dd>
+    </dl>
+    <form asp-action="Accept">
+        <input type="hidden" asp-for="ModificacionId" />
+        <input type="submit" value="Accept" class="boton_tabla back-blue" /> |
+        <a class="boton_tabla bg_danger" asp-action="Index">Volver a la lista</a>
+    </form>
+</div>
+    
