@@ -33,14 +33,14 @@
         </dt>
         <dd class = "col-sm-12 bg-white padding-left padding_boton_sm margin-top border border-dark">
                 <p>Texto agregado</p>
-                <ul>
+                
                 @foreach (var palabra in ViewBag.TextoAgregado)
                 {
-                    <li>
+                    
                         @Html.Raw(palabra)
-                    </li>
+                    
                 }
-                </ul>
+                
                 <p>Texto quitado</p>
                 <ul>
                 @foreach (var palabra in ViewBag.TextoQuitado)
@@ -51,10 +51,12 @@
                 }
                 </ul>
                 <p>Texto marcado</p>
-                @foreach(LeyesTFG.Controllers.ModificacionController.CharResult resultado in ViewBag.TextoMarcado)
-                {
-                    <span class=@resultado.state>@resultado.c</span>
-                }
+                <div style="font-size: 0;">
+                    @foreach(LeyesTFG.Controllers.ModificacionController.CharResult resultado in ViewBag.TextoMarcado)
+                    {
+                        <span style="font-size: 16px; white-space: pre-wrap;" class=@resultado.state>@Html.Raw(resultado.c)</span>
+                    }
+                </div>
         </dd>
     </dl>
 </div>
