@@ -19,6 +19,16 @@ namespace LeyesTFG.Models
 
         public bool Aceptado { get; set; }
 
+        public bool PendienteEva { get; set; }
+
         public Articulo Articulo { get; set; }
+    }
+
+    public enum CharState { Add, Equal, Remove }
+
+    public struct CharResult
+    {
+        public char c;
+        public CharState state;
     }
 }

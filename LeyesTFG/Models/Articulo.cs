@@ -16,6 +16,8 @@ namespace LeyesTFG.Models
 
         [Required(ErrorMessage = "Debe de introducir una ley asociada al artículo")]
         public int LeyId { get; set; }
+
+        public string? TextoAnterior { get; set; }
         
         public Ley Ley { get; set; }
 

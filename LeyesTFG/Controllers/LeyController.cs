@@ -63,8 +63,6 @@ namespace LeyesTFG.Controllers
         }
 
         // POST: Ley/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("LeyId,Titulo,FechaPublicacion,Departamento")] Ley ley)
@@ -96,8 +94,6 @@ namespace LeyesTFG.Controllers
         }
 
         // POST: Ley/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("LeyId,Titulo,FechaPublicacion,Departamento")] Ley ley)
@@ -106,7 +102,7 @@ namespace LeyesTFG.Controllers
             {
                 return NotFound();
             }
-
+            ModelState.Remove("Articulos");
             if (ModelState.IsValid)
             {
                 try

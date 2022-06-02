@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4 a4_size">
-        <form asp-action="Edit">
+        <form asp-action="Edit" onsubmit="handleSubmit()">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ModificacionId" />
             <div class="form-group">
@@ -29,7 +29,16 @@
                 <span asp-validation-for="Texto" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="boton_tabla" />
+                <input type="hidden" asp-for="@Model.ArticuloId" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Aceptado" class="form-check-input" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="PendienteEva" class="form-check-input" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="boton_tabla" />
                 | <a class="boton_tabla padding_boton_sm bg-danger" asp-action="Index">Volver a la lista</a>
             </div>
         </form>

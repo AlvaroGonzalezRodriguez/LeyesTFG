@@ -44,6 +44,7 @@ namespace LeyesTFG.Controllers
             }
 
             var articulo = await _context.Articulo
+                .Include(a => a.Ley)
                 .Include(c => c.Modificaciones)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ArticuloId == id);
@@ -51,6 +52,47 @@ namespace LeyesTFG.Controllers
             {
                 return NotFound();
             }
+
+            List<CharResult> diferencia = new List<CharResult>();
+            if (!articulo.TextoAnterior.Equals("Este articulo no ha sido modificado nunca"))
+            {
+                string dummy1 = articulo.Texto;
+                string dummy2 = articulo.TextoAnterior;
+                dummy1 = ModificacionController.QuitarTagsHTML(dummy1);
+                dummy2 = ModificacionController.QuitarTagsHTML(dummy2);
+                diferencia = ModificacionController.EditSequenceLevensthein(dummy2, dummy1);
+            }
+            ViewBag.Diferencia = diferencia;
+
+            var modAceptados = from a in _context.Modificacion
+                               where a.ArticuloId == articulo.ArticuloId
+                               select a.Aceptado;
+            var modEvaluado = from a in _context.Modificacion
+                              where a.ArticuloId == articulo.ArticuloId
+                              select a.PendienteEva;
+            List<bool> listaAceptado = modAceptados.ToList();
+            List<bool> listaEvaluado = modEvaluado.ToList();
+            List<string> aceptados = new List<string>();
+
+            for (int i = 0; i < listaAceptado.Count; i++)
+            {
+                if (listaEvaluado[i])
+                {
+                    if (listaAceptado[i])
+                    {
+                        aceptados.Add("ACEPTADO");
+                    }
+                    else
+                    {
+                        aceptados.Add("NO ACEPTADO");
+                    }
+                } else
+                {
+                    aceptados.Add("PENDIENTE A EVALUAR");
+                }
+                
+            }
+            ViewBag.Aceptado = aceptados;
 
             return View(articulo);
         }
@@ -73,6 +115,7 @@ namespace LeyesTFG.Controllers
             ModelState.Remove("Modificaciones");
             if (ModelState.IsValid)
             {
+                articulo.TextoAnterior = "Este articulo no ha sido modificado nunca";
                 _context.Add(articulo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

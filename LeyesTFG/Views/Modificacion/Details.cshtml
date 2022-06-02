@@ -11,10 +11,22 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModificacionId)
+            @Html.DisplayNameFor(model => model.Titulo)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModificacionId)
+            @Html.DisplayFor(model => model.Titulo)
+        </dd>
+        <dt class = "col-sm-2">
+            Ley asociada
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Articulo.Ley.Titulo)
+        </dd>
+        <dt class = "col-sm-2">
+            Estado
+        </dt>
+        <dd class = "col-sm-10">
+            <strong>@Html.Raw(ViewBag.Estado)</strong>
         </dd>
         <dt class = "col-sm-12">
             @Html.DisplayNameFor(model => model.Texto)
@@ -23,36 +35,18 @@
             @Html.Raw(Model.Texto)
         </dd>
         <dt class = "col-sm-12">
-            @Html.DisplayNameFor(model => model.Articulo)
+            @Html.DisplayNameFor(model => model.Articulo) | Título: @Html.DisplayFor(model => model.Articulo.Titulo) | 
+            <a style="color: darkgoldenrod;" asp-area="" asp-controller="Articulo" asp-action="Details" asp-route-id="@Model.ArticuloId">Detalles</a>
         </dt>
         <dd class = "col-sm-12 bg-white padding-left padding_boton_sm margin-top border border-dark">
             @Html.Raw(Model.Articulo.Texto)
         </dd>
         <dt class = "col-sm-12">
-            Palabras diferentes
+            Texto marcando las diferencias
         </dt>
         <dd class = "col-sm-12 bg-white padding-left padding_boton_sm margin-top border border-dark">
-                <p>Texto agregado</p>
-                
-                @foreach (var palabra in ViewBag.TextoAgregado)
-                {
-                    
-                        @Html.Raw(palabra)
-                    
-                }
-                
-                <p>Texto quitado</p>
-                <ul>
-                @foreach (var palabra in ViewBag.TextoQuitado)
-                {
-                    <li>
-                        @Html.Raw(palabra)
-                    </li>
-                }
-                </ul>
-                <p>Texto marcado</p>
                 <div style="font-size: 0;">
-                    @foreach(LeyesTFG.Controllers.ModificacionController.CharResult resultado in ViewBag.TextoMarcado)
+                    @foreach(CharResult resultado in ViewBag.TextoMarcado)
                     {
                         <span style="font-size: 16px; white-space: pre-wrap;" class=@resultado.state>@Html.Raw(resultado.c)</span>
                     }
@@ -62,5 +56,7 @@
 </div>
 <div>
     <a class="boton_tabla" asp-action="Edit" asp-route-id="@Model?.ModificacionId">Editar</a> |
-    <a class="boton_tabla back_blue" asp-action="Index">Volver a la lista</a>
+    <a class="boton_tabla back_blue" asp-controller="Modificacion" asp-action="Accept" asp-route-id="@Model.ModificacionId">Evaluar</a> |
+    <a class="boton_tabla" asp-action="Index">Volver a la lista</a> |
+    <a class="boton_tabla back_blue" href="javascript:history.go(-1)">Volver a la página anterior</a>
 </div>

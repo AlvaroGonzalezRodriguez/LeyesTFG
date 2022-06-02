@@ -25,7 +25,7 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-action="Delete" onclick="return confirm('Estas seguro de querer borrar esta modificación')">
         <input type="hidden" asp-for="ModificacionId" />
         <input type="submit" value="Delete" class="boton_tabla bg-danger" /> |
         <a class="boton_tabla back_blue" asp-action="Index">Volver a la lista</a>

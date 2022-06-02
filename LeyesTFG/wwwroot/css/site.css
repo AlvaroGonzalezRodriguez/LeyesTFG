@@ -84,11 +84,11 @@ body {
 }
 
 .Add {
-    background-color: greenyellow;
+    background-color: greenyellow !important;
 }
 
 .Remove {
-    background-color: indianred;
+    background-color: indianred !important;
     text-decoration: line-through;
 }
 
@@ -128,5 +128,5 @@ body {
 }
 
 .back_ora {
-    background-color: lightgrey;
+    background-color: lightgrey !important;
 }

@@ -11,10 +11,10 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ArticuloId)
+            Ley asociada
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ArticuloId)
+            @Html.DisplayFor(model => model.Ley.Titulo)
         </dd>
         <dt class = "col-sm-12">
             @Html.DisplayNameFor(model => model.Texto)
@@ -27,18 +27,41 @@
         </dt>
         <dd class="col-sm-10">
             <ul>
-                @foreach (var modificacion in Model.Modificaciones)
-                {
-                    <li>
-                    @Html.DisplayFor(modelItem => modificacion.Titulo) |
-                    <a style="color: darkgoldenrod;" asp-area="" asp-controller="Modificacion" asp-action="Details" asp-route-id="@modificacion.ModificacionId">Detalles</a><br>
-                    </li>
+                
+                @{
+                    int i = 0;
+                    foreach (var modificacion in Model.Modificaciones)
+                    {
+                        <li>
+                        @Html.DisplayFor(modelItem => modificacion.Titulo) |
+                        <strong>@ViewBag.Aceptado[i]</strong> | <a style="color: darkgoldenrod;" asp-area="" asp-controller="Modificacion" asp-action="Details" asp-route-id="@modificacion.ModificacionId">Detalles</a>
+                        </li>
+                        i++;
+                    }
                 }
             </ul>
+        </dd>
+        <dt class = "col-sm-12">
+            Texto original (en caso de que una modificacion haya sido aceptada)
+        </dt>
+        <dd class="col-sm-12 bg-white padding-left padding_boton_sm margin-top border border-dark">
+            @Html.Raw(@Model.TextoAnterior)
+        </dd>
+        <dt class = "col-sm-12">
+            Texto marcando las diferencias (en caso de que una modificacion haya sido aceptada)
+        </dt>
+        <dd class="col-sm-12 bg-white padding-left padding_boton_sm margin-top border border-dark">
+            <div style="font-size: 0;">
+               @foreach(CharResult resultado in ViewBag.Diferencia)
+               {
+                    <span style="font-size: 16px; white-space: pre-wrap;" class=@resultado.state>@Html.Raw(resultado.c)</span>
+               }
+           </div>
         </dd>
     </dl>
 </div>
 <div>
     <a class="boton_tabla" asp-controller="Modificacion" asp-action="Create" asp-route-id="@Model.ArticuloId">Modificar</a> |
-    <a class="boton_tabla back_blue" asp-action="Index">Volver a la lista</a>
+    <a class="boton_tabla back_blue" asp-action="Index">Volver a la lista</a> |
+    <a class="boton_tabla" href="javascript:history.go(-1)">Volver a la página anterior</a>
 </div>

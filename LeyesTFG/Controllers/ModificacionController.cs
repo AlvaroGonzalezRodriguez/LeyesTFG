@@ -22,11 +22,37 @@ namespace LeyesTFG.Controllers
         }
 
         // GET: Modificacion
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string busqueda)
         {
+            ViewData["Filtro"] = busqueda;
+
             var modificacion = _context.Modificacion
                 .Include(c => c.Articulo)
                 .AsNoTracking();
+            if (!String.IsNullOrEmpty(busqueda))
+            {
+                modificacion = modificacion.Where(c => c.Titulo.Contains(busqueda));
+            }
+            List<Modificacion> listaMod = modificacion.ToList();
+            List<string> estado = new List<string>();
+            for (int i = 0; i < listaMod.Count; i++)
+            {
+                if(listaMod.ElementAt(i).PendienteEva)
+                {
+                    if (listaMod.ElementAt(i).Aceptado)
+                    {
+                        estado.Add("Add");
+                    } else
+                    {
+                        estado.Add("Remove");
+                    }
+                } else
+                {
+                    estado.Add("back_ora");
+                }
+            }
+            ViewBag.estado = estado;
+
             return View(await modificacion.ToListAsync());
         }
 
@@ -40,13 +66,28 @@ namespace LeyesTFG.Controllers
 
             var modificacion = await _context.Modificacion
                 .Include(c => c.Articulo)
+                    .ThenInclude(a => a.Ley)
                 .FirstOrDefaultAsync(m => m.ModificacionId == id);
 
             if (modificacion == null)
             {
                 return NotFound();
             }
-
+            string estado;
+            if (modificacion.PendienteEva)
+            {
+                if (modificacion.Aceptado)
+                {
+                    estado = "ACEPTADO";
+                } else
+                {
+                    estado = "NO ACEPTADO";
+                }
+            } else
+            {
+                estado = "PENDIENTE A EVALUAR";
+            }
+            ViewBag.Estado = estado;
             DiferenciaTexto(id, modificacion);
             return View(modificacion);
         }
@@ -62,6 +103,7 @@ namespace LeyesTFG.Controllers
             {
                 modificacion = new Modificacion();
                 modificacion.Texto = "<p>Introduzca <strong>aquí</strong> el contenido del artículo</p> <p><br></p>";
+                modificacion.PendienteEva = true;
             }
             ListaDeArticulos();
             return View(modificacion);
@@ -69,8 +111,6 @@ namespace LeyesTFG.Controllers
 
 
         // POST: Modificacion/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ModificacionId,Titulo,Texto,ArticuloId")] Modificacion modificacion)
@@ -80,6 +120,7 @@ namespace LeyesTFG.Controllers
             {
                 _context.Add(modificacion);
                 await _context.SaveChangesAsync();
+                TempData["Mensaje"] = "¡Modificación creada exitosamente!";
                 return RedirectToAction(nameof(Index));
             }
             ListaDeArticulos(modificacion.ArticuloId);
@@ -104,23 +145,22 @@ namespace LeyesTFG.Controllers
         }
 
         // POST: Modificacion/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ModificacionId,Titulo,Texto,ArticuloId")] Modificacion modificacion)
+        public async Task<IActionResult> Edit(int id, [Bind("ModificacionId,Titulo,Texto,ArticuloId,PendienteEva,Aceptado")] Modificacion modificacion)
         {
             if (id != modificacion.ModificacionId)
             {
                 return NotFound();
             }
-
+            ModelState.Remove("Articulo");
             if (ModelState.IsValid)
             {
                 try
                 {
                     _context.Update(modificacion);
                     await _context.SaveChangesAsync();
+                    TempData["Mensaje"] = "¡Modificación editada exitosamente!";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -166,14 +206,6 @@ namespace LeyesTFG.Controllers
             return modificacion;
         }
 
-        public enum CharState {Add,Equal,Remove}
-
-        public struct CharResult
-        {
-            public char c;
-            public CharState state;
-        }
-
         private void DiferenciaTexto(int? id, Modificacion modificacion)
         {
             var textoOriginal = from b in _context.Articulo
@@ -188,25 +220,16 @@ namespace LeyesTFG.Controllers
                            
             string[] texto1 = textoOriginal.ToArray();
             string[] texto2 = textoMod.ToArray();
-            IEnumerable<String> textoAgregado = null;
-            IEnumerable<String> textoQuitado = null;
 
             texto1[0] = QuitarTagsHTML(texto1[0]); 
             texto2[0] = QuitarTagsHTML(texto2[0]);
-            string[] palabras1 = texto1[0].Split();
-            string[] palabras2 = texto2[0].Split();
 
             List<CharResult> textoMarcado = EditSequenceLevensthein(texto1[0], texto2[0]);
 
-            textoAgregado = palabras2.Except(palabras1);
-            textoQuitado = palabras1.Except(palabras2);
-
-            ViewBag.TextoQuitado = textoQuitado;
-            ViewBag.TextoAgregado = textoAgregado;
             ViewBag.TextoMarcado = textoMarcado;
         }
 
-        private static List<CharResult> EditSequenceLevensthein(string source, string target, int insertCost = 1, int removeCost = 1, int editCost = 2)
+        public static List<CharResult> EditSequenceLevensthein(string source, string target, int insertCost = 1, int removeCost = 1, int editCost = 2)
         {
             if (null == source)
                 throw new ArgumentNullException("source");
@@ -290,7 +313,7 @@ namespace LeyesTFG.Controllers
             return result;
         }
 
-        private static string QuitarTagsHTML(string texto)
+        public static string QuitarTagsHTML(string texto)
         {
             char[] array = new char[texto.Length];
             int arrayIndex = 0;
@@ -344,6 +367,7 @@ namespace LeyesTFG.Controllers
             var modificacion = await _context.Modificacion.FindAsync(id);
             _context.Modificacion.Remove(modificacion);
             await _context.SaveChangesAsync();
+            TempData["Mensaje"] = "¡Modificación eliminada exitosamente!";
             return RedirectToAction(nameof(Index));
         }
 
@@ -361,6 +385,16 @@ namespace LeyesTFG.Controllers
             {
                 return NotFound();
             }
+
+            string textoMod = QuitarTagsHTML(modificacion.Texto);
+            string textoOrig = QuitarTagsHTML(modificacion.Articulo.Texto);
+
+            List<CharResult> textoMarcado = EditSequenceLevensthein(textoOrig, textoMod);
+
+            ViewBag.TextoMarcado = textoMarcado;
+
+            
+
             return View(modificacion);
         }
 
@@ -368,6 +402,40 @@ namespace LeyesTFG.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Accept(int id)
         {
+            var modificacion = await _context.Modificacion.FindAsync(id);
+            modificacion.Aceptado = true;
+            modificacion.PendienteEva = true;
+
+            var allMod = from a in _context.Modificacion
+                         where a.ModificacionId != id && a.ArticuloId == modificacion.ArticuloId
+                         select a;
+            List<Modificacion> listaMod = allMod.ToList();
+            //UNA VEZ SE ACEPTA UNA MODIFICACION EL RESTO SE DENIEGAN AL MOMENTO
+            for (int i = 0; i < listaMod.Count; i++)
+            {
+                listaMod.ElementAt(i).PendienteEva = true;
+                listaMod.ElementAt(i).Aceptado = false;
+                _context.Update(listaMod.ElementAt(i));
+            }
+
+            var articulo = await _context.Articulo.FirstOrDefaultAsync(item => item.ArticuloId == modificacion.ArticuloId);
+            articulo.TextoAnterior = articulo.Texto;
+            articulo.Texto = modificacion.Texto;
+            await _context.SaveChangesAsync();
+            TempData["Mensaje"] = "¡Modificación aceptada exitosamente!";
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Denegate(int id) //DEVUELVE 0 POR ALGUNA RAZON
+        {
+            var modificacion = await _context.Modificacion.FindAsync(id);
+            modificacion.Aceptado = false;
+            modificacion.PendienteEva = true;
+            _context.Update(modificacion);
+            await _context.SaveChangesAsync();
+            TempData["Mensaje"] = "¡Modificación denegada exitosamente!";
             return RedirectToAction(nameof(Index));
         }
 

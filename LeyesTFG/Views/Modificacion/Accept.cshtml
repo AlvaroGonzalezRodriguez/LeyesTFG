@@ -1,14 +1,13 @@
 ﻿@model LeyesTFG.Models.Modificacion
 
 @{
-    ViewData["Title"] = "Aceptado";
+    ViewData["Title"] = "Evaluar";
 }
 
-<h1 class="tituloTabla text-center">Aceptar modificacion</h1>
+<h1 class="tituloTabla text-center">Evaluar modificacion</h1>
 
 <h3 class="text-center">
-    ¿Estás seguro que quieres aceptar esta propuesta de modificación?<br />Se eliminara su entrada como modificación y se modificará
-    el texto original del artículo
+    A continuación usted podrá aceptar o rechazar la modificación.<br />Si la acepta se modificará el texto original del artículo y el resto de modificaciones se rechazarán.
 </h3>
 <h4 class="text-center">Modificación</h4>
 <div>
@@ -21,16 +20,34 @@
             @Html.Raw(Model.Texto)
         </dd>
         <dt class = "col-sm-12">
-            <p>Texto original</p>
+            Texto original
         </dt>
-        <dd class = "col-sm-12 bg-white padding-left padding_boton_sm margin-top border border-dark">
+        <dd class = "col-sm-12 bg-white padding-left padding_boton_sm border border-dark">
             @Html.Raw(Model.Articulo.Texto)
         </dd>
+        <dt class = "col-sm-12">
+            Texto marcando las diferencias
+        </dt>
+        <dd class="col-sm-12 bg-white padding-left padding_boton_sm margin-top border border-dark">
+            <div style="font-size: 0;">
+               @foreach(CharResult resultado in ViewBag.TextoMarcado)
+               {
+                    <span style="font-size: 16px; white-space: pre-wrap;" class=@resultado.state>@Html.Raw(resultado.c)</span>
+               }
+           </div>
+        </dd>
     </dl>
-    <form asp-action="Accept">
+    
+    <form style="display:inline-block;" asp-action="Accept" onclick="return confirm('Estas seguro de querer aceptar esta modificación')">
         <input type="hidden" asp-for="ModificacionId" />
-        <input type="submit" value="Accept" class="boton_tabla back-blue" /> |
-        <a class="boton_tabla bg_danger" asp-action="Index">Volver a la lista</a>
+        <input type="submit" value="Aceptar" class="boton_tabla" /> |
     </form>
+    <form style="display:inline-block;" asp-action="Denegate" asp-route-id="@Model.ModificacionId" onclick="return confirm('Estas seguro de querer rechazar esta modificación')">
+        <input type="hidden" asp-for="ModificacionId" />
+        <input type="submit" value="Denegar" class="boton_tabla bg-danger" /> |
+        <a class="boton_tabla back_blue" asp-action="Index">Volver a la lista</a>
+    </form>
+    
+    
 </div>
     
