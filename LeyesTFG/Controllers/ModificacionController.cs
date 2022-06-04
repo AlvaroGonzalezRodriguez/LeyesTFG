@@ -35,6 +35,7 @@ namespace LeyesTFG.Controllers
             }
             List<Modificacion> listaMod = modificacion.ToList();
             List<string> estado = new List<string>();
+            List<string> textoTruncado = new List<string>();
             for (int i = 0; i < listaMod.Count; i++)
             {
                 if(listaMod.ElementAt(i).PendienteEva)
@@ -50,8 +51,10 @@ namespace LeyesTFG.Controllers
                 {
                     estado.Add("back_ora");
                 }
+                textoTruncado.Add(Truncar(listaMod.ElementAt(i).Texto, 500));
             }
             ViewBag.estado = estado;
+            ViewBag.truncar = textoTruncado;
 
             return View(await modificacion.ToListAsync());
         }
@@ -311,6 +314,17 @@ namespace LeyesTFG.Controllers
             }
             result.Reverse();
             return result;
+        }
+
+        public static string Truncar(string valor, int longitud)
+        {
+            if(valor.Length > longitud)
+            {
+                return valor.Substring(0, longitud) + "...";
+            } else
+            {
+                return valor;
+            }
         }
 
         public static string QuitarTagsHTML(string texto)

@@ -41,6 +41,7 @@
                     <strong>LeyId</strong>: Se debe de añadir la clave primaria de la ley para poder relacionarlas. El usuario solo tiene que seleccionar
                     el título de la ley en una lista de las leyes existentes para que el sistema asigne automaticamente su clave primaria.
                 </li>
+                <li><strong>TextoAnterior</strong>: Se trata del contenido original del artículo en caso de que este haya variado por culpa de una modificación</li>
                 <li><strong>Ley</strong>: Elemento de navegación. A un artículo solo se le puede añadir una y solo una ley.</li>
                 <li><strong>Modificaciones</strong>: Elemento de navegación. A un artículo se le puede asignar cero o más modificaciones</li>
             </ul>
@@ -59,6 +60,8 @@
                     <strong>ArticuloId</strong>: Se debe de añadir la clave primaria del artículo para poder relacionarlas. El usuario solo tiene que seleccionar
                     el título del artículo en una lista con los artículos existentes para que el sistema asigne automaticamente su clave primaria.
                 </li>
+                <li><strong>Aceptado</strong>: Valor booleano que sirve para saber si una modificación ha sido aceptada</li>
+                <li><strong>PendienteEva</strong>: Valor booleano que srive para saber si una modificación ha sido previamente evaluada</li>
                 <li><strong>Articulo</strong>: Elemento de navegación. A una modificación se le puede asignar un y solo un artículo.</li>
             </ul>
         </div>

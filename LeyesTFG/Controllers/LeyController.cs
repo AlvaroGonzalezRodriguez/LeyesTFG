@@ -72,6 +72,7 @@ namespace LeyesTFG.Controllers
             {
                 _context.Add(ley);
                 await _context.SaveChangesAsync();
+                TempData["Mensaje"] = "¡Ley creada exitosamente!";
                 return RedirectToAction(nameof(Index));
             }
             return View(ley);
@@ -109,6 +110,7 @@ namespace LeyesTFG.Controllers
                 {
                     _context.Update(ley);
                     await _context.SaveChangesAsync();
+                    TempData["Mensaje"] = "¡Ley editada exitosamente!";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -159,6 +161,7 @@ namespace LeyesTFG.Controllers
             var ley = await _context.Ley.FindAsync(id);
             _context.Ley.Remove(ley);
             await _context.SaveChangesAsync();
+            TempData["Mensaje"] = "¡Ley eliminada exitosamente!";
             return RedirectToAction(nameof(Index));
         }
 

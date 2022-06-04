@@ -45,8 +45,8 @@
     <form style="display:inline-block;" asp-action="Denegate" asp-route-id="@Model.ModificacionId" onclick="return confirm('Estas seguro de querer rechazar esta modificación')">
         <input type="hidden" asp-for="ModificacionId" />
         <input type="submit" value="Denegar" class="boton_tabla bg-danger" /> |
-        <a class="boton_tabla back_blue" asp-action="Index">Volver a la lista</a>
     </form>
+    <a class="boton_tabla back_blue" asp-action="Index">Volver a la lista</a>
     
     
 </div>

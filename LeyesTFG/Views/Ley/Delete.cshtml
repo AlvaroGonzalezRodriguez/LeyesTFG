@@ -32,9 +32,9 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete" onclick="return confirm('Estas seguro de querer borrar esta ley')">
+    <form asp-action="Delete" style="display:inline-block;" onclick="return confirm('Estas seguro de querer borrar esta ley')">
         <input type="hidden" asp-for="LeyId" />
         <input type="submit" value="Delete" class="boton_tabla bg-danger" /> |
-        <a class="boton_tabla back_blue" asp-action="Index">Volver a la lista</a>
     </form>
+    <a class="boton_tabla back_blue" asp-action="Index">Volver a la lista</a>
 </div>

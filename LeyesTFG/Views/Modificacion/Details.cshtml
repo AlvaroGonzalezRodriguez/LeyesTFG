@@ -20,7 +20,8 @@
             Ley asociada
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Articulo.Ley.Titulo)
+            @Html.DisplayFor(model => model.Articulo.Ley.Titulo) |
+            <a style="color: darkgoldenrod;" asp-area="" asp-controller="Ley" asp-action="Details" asp-route-id="@Model.Articulo.LeyId">Detalles</a>
         </dd>
         <dt class = "col-sm-2">
             Estado

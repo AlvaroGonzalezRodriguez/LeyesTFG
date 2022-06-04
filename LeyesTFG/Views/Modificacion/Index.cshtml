@@ -58,7 +58,7 @@
                         @Html.DisplayFor(modelItem => item.Titulo)
                     </td>
                     <td>
-                        @Html.Raw(item.Texto)
+                        @Html.Raw(@ViewBag.truncar[i])
                     </td>
                     <td class="text-center">
                         <div class="container">

@@ -32,6 +32,14 @@ namespace LeyesTFG.Controllers
                 articulo = articulo.Where(c => c.Ley.Titulo.Contains(busqueda));
             }
 
+            List<Articulo> listaArt = articulo.ToList();
+            List<string> textoTruncado = new List<string>();
+            for (int i = 0; i < listaArt.Count; i++)
+            {
+                textoTruncado.Add(ModificacionController.Truncar(listaArt.ElementAt(i).Texto, 500));
+            }
+            ViewBag.truncar = textoTruncado;
+
             return View(await articulo.ToListAsync());
         }
 
@@ -105,8 +113,6 @@ namespace LeyesTFG.Controllers
         }
 
         // POST: Articulo/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ArticuloId,Titulo,Texto,LeyId")] Articulo articulo)
@@ -118,6 +124,7 @@ namespace LeyesTFG.Controllers
                 articulo.TextoAnterior = "Este articulo no ha sido modificado nunca";
                 _context.Add(articulo);
                 await _context.SaveChangesAsync();
+                TempData["Mensaje"] = "¡Artículo creado exitosamente!";
                 return RedirectToAction(nameof(Index));
             }
             ListaDeLeyes(articulo.LeyId);
@@ -159,6 +166,7 @@ namespace LeyesTFG.Controllers
                 {
                     _context.Update(articulo);
                     await _context.SaveChangesAsync();
+                    TempData["Mensaje"] = "¡Artículo editado exitosamente!";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -211,6 +219,7 @@ namespace LeyesTFG.Controllers
             var articulo = await _context.Articulo.FindAsync(id);
             _context.Articulo.Remove(articulo);
             await _context.SaveChangesAsync();
+            TempData["Mensaje"] = "¡Artículo borrado exitosamente!";
             return RedirectToAction(nameof(Index));
         }
 
