@@ -1,1 +1,17 @@
-LeyesTFG
+<h1>Transformación Digital en la elaboración de Leyes usando editores WYSIWYG</h1>
+<h3>Digital Transformation in Law-making using WYSIWYG editors</h3>
+El objetivo de este trabajo ha sido el desarrollo e implementación de un sistema que permita llevar a cabo propuestas de modificaciones a las diferentes partes de la ley (enmiendas) de forma sencilla y amigable utilizando editores WYSIWYG (acrónimo de “What you See is What You Get”, en español, “lo que ves es lo que obtienes”) y permita la visualización eficiente de los cambios propuestos a una ley.</br>
+Para ello, se realizaron una serie de tareas basadas en el estudio previo y comparativas de soluciones relacionadas con editores WYSIWYG, el desarrollo del sistema y la implementación de las tres fases esenciales implicadas en las modificaciones de una ley: inserción de los artículos, inserción de enmiendas y visualización de cambios propuestos.</br>
+Respecto a la aplicación, se han utilizado distintas tecnologías en su desarrollo. Se ha trabajado en el framework ASP.NET Core en Visual Studio 2022 con carga de trabajo para aplicaciones web, donde se hace uso de C# para el back-end y HTML para el front-end. SQL Server es el gestor de la base de datos elegido, mientras que con Entity Framework Core se implementa en el código que actúa como asignador relacional de objetos.</br>
+Además, para concluir el trabajo, se ha realizado una evaluación experimental con un entorno real, es decir, introduciendo los datos de una ley y simular unas propuestas de modificaciones para la misma. De esta manera se consigue probar el correcto funcionamiento del aplicativo.</br></br>
+
+<h3>Editor WYSIWYG</h3>
+Del acrónimo What You See Is What You Get, un editor WYSIWYG tiene la capacidad de mostrar por pantalla el resultado final de lo que escribe un usuario sin la necesidad de codificarlo. Por ejemplo, si un usuario quiere poner una palabra en negrita no tiene que poner la palabra deseada entre etiquetas, será el editor quien le dará la opción de poner la palabra en negrita y verlo por pantalla a través de una opción en su interfaz. Este ejemplo lo podemos ver en uno de los procesadores de texto más famosos del mercado, Microsoft Word.</br>
+Se ha decidido optar por usar el editor Quill. La principal característica que destaca con el resto es su gran customización gracias a su arquitectura modular y su API, al igual que su fácil implementación y aprendizaje.</br>
+
+<h3>Uso de la aplicación</h3>
+Su uso es muy sencillo, para poder añadir un artículo se tiene que primero añadir su correspondiente ley en la tabla de leyes, lo mismo pasa para las modificaciones, pero en vez de añadir una ley tiene que existir una modificación a editar. Para poder añadir una ley se tiene que ir a la tabla de leyes, para acceder a ella hay que pulsar sobre el botón de leyes en la página de inicio o donde está escrito la palabra leyes en la cabecera. Una vez allí será necesario pulsar el botón "Nueva ley" e introducir los datos correspondientes. Lo mismo se puede aplicar para el resto de tablas. La mayor parte de la interacción de la aplicación se encuentra entre las tablas de modificación y artículos, que interactuan entre sí ya sea creando una nueva modificación desde la tabla de artículos o modificando el contenido de un artículo al evaluar una modificación</br>
+
+<h3>Autores</h3>
+Autor: Álvaro González Rodríguez</br>
+Tutora académica: María Elena Sánchez Nielsen</br>
