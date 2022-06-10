@@ -15,12 +15,14 @@ namespace LeyesTFG.Controllers
     {
         private readonly LeyesTFGContext _context;
 
+        // Carga el contexto de la base de datos
         public LeyController(LeyesTFGContext context)
         {
             _context = context;
         }
 
         // GET: Ley
+        // Carga los datos en la vista de indices en leyes, tambien añade el filtro
         public async Task<IActionResult> Index(string busqueda)
         {
             ViewData["Filtro"] = busqueda;
@@ -37,6 +39,7 @@ namespace LeyesTFG.Controllers
         }
 
         // GET: Ley/Details/5
+        // Carga los datos de la ley en la pestaña de detalles
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -52,17 +55,18 @@ namespace LeyesTFG.Controllers
             {
                 return NotFound();
             }
-            //ListaDeArticulos();
             return View(ley);
         }
 
         // GET: Ley/Create
+        // Inicia la vista de creación de leyes
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Ley/Create
+        // Guarda la ley nueva en la base de datos, tambien crea el mensaje de ley exitosa para las vistas
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("LeyId,Titulo,FechaPublicacion,Departamento")] Ley ley)
@@ -79,6 +83,7 @@ namespace LeyesTFG.Controllers
         }
 
         // GET: Ley/Edit/5
+        // Carga los datos de la ley a editar en la vista
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,6 +100,7 @@ namespace LeyesTFG.Controllers
         }
 
         // POST: Ley/Edit/5
+        // Cambia en la base de datos la ley editada, además crea el mensaje de edicion exitosa
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("LeyId,Titulo,FechaPublicacion,Departamento")] Ley ley)
@@ -127,15 +133,9 @@ namespace LeyesTFG.Controllers
             }
             return View(ley);
         }
-        /*private void ListaDeArticulos()
-        {
-            var articulosQuery = from a in _context.Articulo
-                                 orderby a.LeyId
-                                 select a;
-            ViewBag.ListaArticulos = new SelectList(articulosQuery.AsNoTracking(), "ArticuloId", "Titulo");
-        }*/
 
         // GET: Ley/Delete/5
+        // Carga los datos de la ley a eliminar en la vista
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -154,6 +154,7 @@ namespace LeyesTFG.Controllers
         }
 
         // POST: Ley/Delete/5
+        // Borra la ley de la base de datos
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

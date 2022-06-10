@@ -15,12 +15,14 @@ namespace LeyesTFG.Controllers
     {
         private readonly LeyesTFGContext _context;
 
+        // Carga el contexto de la base de datos
         public ArticuloController(LeyesTFGContext context)
         {
             _context = context;
         }
 
         // GET: Articulo
+        // Carga los datos en la vista de indices en leyes, tambien añade el filtro y trunca el texto
         public async Task<IActionResult> Index(string busqueda)
         {
             ViewData["Filtro"] = busqueda;
@@ -44,6 +46,7 @@ namespace LeyesTFG.Controllers
         }
 
         // GET: Articulo/Details/5
+        // Carga los datos del articulo en la pestaña de detalles, si ha sido modificado realiza una diferencia entre los textos y muestra el estado de sus modificaciones
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -106,6 +109,7 @@ namespace LeyesTFG.Controllers
         }
 
         // GET: Articulo/Create
+        // Inicia la vista de creación de artículos con una lista de leyes
         public IActionResult Create()
         {
             ListaDeLeyes();
@@ -113,6 +117,7 @@ namespace LeyesTFG.Controllers
         }
 
         // POST: Articulo/Create
+        // Guarda el articulo nuevo en la base de datos, tambien crea el mensaje de articulo exitoso para las vistas
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ArticuloId,Titulo,Texto,LeyId")] Articulo articulo)
@@ -132,6 +137,7 @@ namespace LeyesTFG.Controllers
         }
 
         // GET: Articulo/Edit/5
+        // Carga los datos del articulo a editar en la vista
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -149,8 +155,7 @@ namespace LeyesTFG.Controllers
         }
 
         // POST: Articulo/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Cambia en la base de datos el articulo editado, además crea el mensaje de edicion exitosa
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ArticuloId,Titulo,Texto,LeyId")] Articulo articulo)
@@ -185,6 +190,7 @@ namespace LeyesTFG.Controllers
             return View(articulo);
         }
 
+        // Crea una lista de las leyes para ser usada en las vistas
         private void ListaDeLeyes(object LeySeleccionada = null)
         {
             var leyQuery = from l in _context.Ley
@@ -194,6 +200,7 @@ namespace LeyesTFG.Controllers
         }
 
         // GET: Articulo/Delete/5
+        // Carga los datos del articulo a eliminar en la vista
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -212,6 +219,7 @@ namespace LeyesTFG.Controllers
         }
 
         // POST: Articulo/Delete/5
+        // Borra el articulo de la base de datos
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

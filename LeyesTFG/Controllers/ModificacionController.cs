@@ -16,12 +16,14 @@ namespace LeyesTFG.Controllers
     {
         private readonly LeyesTFGContext _context;
 
+        // Carga el contexto de la base de datos
         public ModificacionController(LeyesTFGContext context)
         {
             _context = context;
         }
 
         // GET: Modificacion
+        // Carga los datos en la vista de indices en modificaciones, tambien añade el filtro, el estado y trunca el texto
         public async Task<IActionResult> Index(string busqueda)
         {
             ViewData["Filtro"] = busqueda;
@@ -60,6 +62,7 @@ namespace LeyesTFG.Controllers
         }
 
         // GET: Modificacion/Details/5
+        // Carga los datos de la modificación en la pestaña de detalles
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -96,6 +99,7 @@ namespace LeyesTFG.Controllers
         }
 
         // GET: Modificacion/Create
+        // Carga la nueva modificación en la pestaña de creación, si tiene una id significa que se tiene que autocompletar los datos con un articulo
         public IActionResult Create(int? id)
         {
             Modificacion modificacion = null;
@@ -114,6 +118,7 @@ namespace LeyesTFG.Controllers
 
 
         // POST: Modificacion/Create
+        // Guarda la modificacion nueva en la base de datos, tambien crea el mensaje de modificacion exitosa para las vistas
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ModificacionId,Titulo,Texto,ArticuloId")] Modificacion modificacion)
@@ -131,6 +136,7 @@ namespace LeyesTFG.Controllers
         }
 
         // GET: Modificacion/Edit/5
+        // Carga los datos de la modificacion a editar en la vista
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -148,6 +154,7 @@ namespace LeyesTFG.Controllers
         }
 
         // POST: Modificacion/Edit/5
+        // Cambia en la base de datos la modificación editada, además crea el mensaje de edicion exitosa
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ModificacionId,Titulo,Texto,ArticuloId,PendienteEva,Aceptado")] Modificacion modificacion)
@@ -182,6 +189,7 @@ namespace LeyesTFG.Controllers
             return View(modificacion);
         }
 
+        // Crea una lista de articulos para usar en las vistas
         private void ListaDeArticulos(object ArticuloSeleccionado = null)
         {
             var articuloQuery = from a in _context.Articulo
@@ -190,6 +198,7 @@ namespace LeyesTFG.Controllers
             ViewBag.ArticuloId = new SelectList(articuloQuery.AsNoTracking(), "ArticuloId", "Titulo", ArticuloSeleccionado);
         }
 
+        // Recoge los datos de un articulo y se lo asigna a una nueva modificacion, usada para autocompletar texto
         private Modificacion RecogerDatosArticulo(int? id)
         {
             var articuloTexto = from a in _context.Articulo
@@ -209,6 +218,7 @@ namespace LeyesTFG.Controllers
             return modificacion;
         }
 
+        // Consulta el texto de un articulo para comparar las diferencias con una modificacion
         private void DiferenciaTexto(int? id, Modificacion modificacion)
         {
             var textoOriginal = from b in _context.Articulo
@@ -232,36 +242,33 @@ namespace LeyesTFG.Controllers
             ViewBag.TextoMarcado = textoMarcado;
         }
 
+        // La diferencia en el texto se realiza haciendo uso de la secuencia de levensthein
         public static List<CharResult> EditSequenceLevensthein(string source, string target, int insertCost = 1, int removeCost = 1, int editCost = 2)
         {
             if (null == source)
                 throw new ArgumentNullException("source");
             else if (null == target)
                 throw new ArgumentNullException("target");
-            // Forward: building score matrix
-            // Best operation (among insert, update, delete) to perform 
+            // Recoge la mejor operación
             CharState[][] M = Enumerable.Range(0, source.Length + 1).Select(line => new CharState[target.Length + 1]).ToArray();
-            // Minimum cost so far
+            // Coste mínimo
             int[][] D = Enumerable.Range(0, source.Length + 1).Select(line => new int[target.Length + 1]).ToArray();
-            // Edge: all removes
             for (int i = 1; i <= source.Length; ++i)
             {
                 M[i][0] = CharState.Remove;
                 D[i][0] = removeCost * i;
             }
 
-            // Edge: all inserts 
             for (int i = 1; i <= target.Length; ++i)
             {
                 M[0][i] = CharState.Add;
                 D[0][i] = insertCost * i;
             }
 
-            // Having fit N - 1, K - 1 characters let's fit N, K
             for (int i = 1; i <= source.Length; ++i)
                 for (int j = 1; j <= target.Length; ++j)
                 {
-                    // here we choose the operation with the least cost
+                    // Selecciona la operación con menor coste
                     int insert = D[i][j - 1] + insertCost;
                     int delete = D[i - 1][j] + removeCost;
                     int edit = D[i - 1][j - 1] + (source[i - 1] == target[j - 1] ? 0 : editCost);
@@ -275,7 +282,7 @@ namespace LeyesTFG.Controllers
                     D[i][j] = min;
                 }
 
-            // Backward: knowing scores (D) and actions (M) let's building edit sequence
+            // Construye la secuencia con los valores de D y M
             List<CharResult> result = new List<CharResult>(Math.Max(source.Length, target.Length));
             for (int x = target.Length, y = source.Length; (x > 0) || (y > 0);)
             {
@@ -309,13 +316,14 @@ namespace LeyesTFG.Controllers
                         { state = CharState.Remove, c = source[y] });
                     }
                 }
-                else // <- Start
+                else
                     break;
             }
             result.Reverse();
             return result;
         }
 
+        // Trunca el texto con una determinada longitud
         public static string Truncar(string valor, int longitud)
         {
             if(valor.Length > longitud)
@@ -327,6 +335,7 @@ namespace LeyesTFG.Controllers
             }
         }
 
+        // Quita las etiquetas html de una cadena
         public static string QuitarTagsHTML(string texto)
         {
             char[] array = new char[texto.Length];
@@ -356,6 +365,7 @@ namespace LeyesTFG.Controllers
         
 
         // GET: Modificacion/Delete/5
+        // Carga los datos de la modificacion a eliminar en la vista
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -374,6 +384,7 @@ namespace LeyesTFG.Controllers
         }
 
         // POST: Modificacion/Delete/5
+        // Borra la modificación de la base de datos
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -385,6 +396,8 @@ namespace LeyesTFG.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Modificacion/Accept/5
+        // Carga los datos de la modificación a aceptar en la vista
         public async Task<IActionResult> Accept(int? id)
         {
             if (id == null)
@@ -407,11 +420,11 @@ namespace LeyesTFG.Controllers
 
             ViewBag.TextoMarcado = textoMarcado;
 
-            
-
             return View(modificacion);
         }
 
+        // POST: Modificacion/Accept/5
+        // Modifica los datos de la modificacion para que sea aceptada y tambien cambia los datos de texto anterior del articulo modificado
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Accept(int id)
@@ -431,7 +444,7 @@ namespace LeyesTFG.Controllers
                 listaMod.ElementAt(i).Aceptado = false;
                 _context.Update(listaMod.ElementAt(i));
             }
-
+            // Busca el articulo que tiene que cambiar el texto
             var articulo = await _context.Articulo.FirstOrDefaultAsync(item => item.ArticuloId == modificacion.ArticuloId);
             articulo.TextoAnterior = articulo.Texto;
             articulo.Texto = modificacion.Texto;
@@ -440,9 +453,11 @@ namespace LeyesTFG.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // POST: Modificacion/Accept/5
+        // Cambia los datos de la modificacion para que esta sea rechazada
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Denegate(int id) //DEVUELVE 0 POR ALGUNA RAZON
+        public async Task<IActionResult> Denegate(int id)
         {
             var modificacion = await _context.Modificacion.FindAsync(id);
             modificacion.Aceptado = false;
